@@ -1,0 +1,7 @@
+*.local.yml
+*.pyc
+.idea
+try.py
+.vagrant
+*.orig
+*.log

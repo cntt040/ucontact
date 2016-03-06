@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Reasons{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Add reason</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<form method="post">
+    <!-- /#page-wrapper -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label style="margin-right: 20px">Title: </label>
+                            <input class="form-control" name="title"
+                                   placeholder="Title" required value="{{data.reason.title}}">
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Reason</label>
+                            <textarea class="form-control" rows="3" name="reason">{{data.reason.reason}}</textarea>
+                        </div>
+                    </div>
+                     <div class="col-lg-12">
+                        <div class="form-group">
+                            <label style="margin-right: 20px">Active: </label>
+                            <input name="active" type="checkbox" {%if data.reason.is_active %} checked {%endif%}>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-12" style="text-align: center; margin-bottom: 100px">
+            <button type="submit" class="btn btn-primary">Update Reason</button>
+            <button type="reset" class="btn btn-warning">Reset</button>
+        </div>
+
+
+    </div>
+</form>
+
+{% endblock %}

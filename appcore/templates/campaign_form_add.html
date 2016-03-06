@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Add Campaign</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<form method="post">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="height: 55px">
+                    <strong style="font-weight: bold;line-height:30px">Infomation</strong>
+
+
+                    <a href="{{ url_for('dashboard.campaign')}}" class="btn btn-info"
+                       style="margin-left: 10px; float: right"><span
+                            class="glyphicon glyphicon-align-left"></span> List Campaigns</a>
+
+                </div>
+
+                <!--<div class="panel-heading">-->
+                <!--<strong style="font-weight: bold;line-height:30px">Infomation</strong>-->
+                <!--</div>-->
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label style="margin-right: 20px">Active: </label>
+                                <input name="active" type="checkbox" value="1">
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label>Campaign Name</label>
+                                <input class="form-control" placeholder="Enter campaign name"
+                                       name="campaign_name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Start At</label>
+                                <input class="form-control" name="campaign_start_at" type="datetime-local"
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Description</label>
+                                        <textarea class="form-control" rows="3" name="campaign_description"
+                                                  required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Note</label>
+                                <textarea class="form-control" rows="3" name="campaign_note"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Share Link</label>
+                                <input class="form-control" name="campaign_share_link"
+                                       placeholder="Enter share link" required>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label>Campaign Code</label>
+                                <input class="form-control" name="campaign_code"
+                                       placeholder="Enter campaign code" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>End At</label>
+                                <input class="form-control" name="campaign_end_at" required
+                                       type="datetime-local">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Content</label>
+                                        <textarea class="form-control" rows="3" name="campaign_content"
+                                                  required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Share message</label>
+                                        <textarea class="form-control" rows="3" name="campaign_share_message"
+                                                  required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Short Link</label>
+                                <input class="form-control" name="campaign_short_link"
+                                       placeholder="Enter short link">
+                            </div>
+
+                        </div>
+
+
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Conditions
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Detail</label>
+                                        <textarea class="form-control" rows="3" name="campaign_condition"
+                                                  required></textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label style="margin-right: 20px">Ad Type: </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" id="condition_ad_type1"
+                                           name="condition_ad_type">Pri
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" id="condition_ad_type2"
+                                           name="condition_ad_type">Pro
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="-1" id="condition_ad_type3"
+                                           name="condition_ad_type">All
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label style="margin-right: 20px">Limit: </label>
+                                <label class="radio-inline">
+                                    <input type="radio" checked="" value="0" id="condition_limit_flag1"
+
+                                           onchange="limitaction()"
+                                           name="condition_limit_flag">Un-limit
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" id="condition_limit_flag2"
+
+                                           name="condition_limit_flag" onchange="limitaction()">Limit
+                                </label>
+                                <input placeholder="Enter number of limit" name="condition_limit"
+                                       id="condition_limit" value="-1" disabled
+                                       style="border-radius: 4px; border: 1px solid #ccc; background-image: none;
+                                               margin-left: 10px; padding: 5px;">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label style="margin-right: 20px">Number of Public: </label>
+                                <input class="form-control" name="condition_num_public"
+                                       placeholder="Number of Public" required>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label style="margin-right: 20px">Number of Hide: </label>
+                                <input class="form-control" name="condition_num_hide"
+                                       placeholder="Number of Hide" required>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label style="margin-right: 20px">Number of Refuse: </label>
+                                <input class="form-control" name="condition_num_refuse"
+                                       placeholder="Number of Refuse" required>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label style="margin-right: 20px">Number of Review: </label>
+                                <input class="form-control" name="condition_num_review"
+                                       placeholder="Number of Review" required>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label style="margin-right: 20px">Number of Total: </label>
+                                <input class="form-control" name="condition_num_total"
+                                       placeholder="Number of Total" required>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <span style="font-weight: bold;">Note</span>: <span
+                                    style="font-style: italic; color: red">"-1" is access all.</span>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+
+        <div class="col-lg-12" style="text-align: center; margin-bottom: 100px">
+            <button type="submit" class="btn btn-primary">Add Campaign</button>
+            <button type="reset" class="btn btn-warning">Reset Form</button>
+        </div>
+
+
+    </div>
+</form>
+</div>
+<script>
+    function limitaction() {
+        if ($('#condition_limit_flag1').is(':checked')) {
+            $("#condition_limit").prop('disabled', true);
+            $("#condition_limit").val(-1);
+        } else {
+            $("#condition_limit").prop('disabled', false);
+            $("#condition_limit").val("1");
+        }
+    }
+</script>
+{%endblock%}

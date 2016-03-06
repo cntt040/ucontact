@@ -1,0 +1,3 @@
+blueprints:
+  - module: api.v1.ucontact
+  - module: api.v1.uploadfile

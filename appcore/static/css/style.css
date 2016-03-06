@@ -1,0 +1,175 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: thonburi, tahoma;
+    font-size: .9em;
+    color: #444;
+}
+
+h1 {
+    color: #666;
+}
+
+.reset {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.clear:after {
+    display: block;
+    clear: both;
+    content: ' ';
+}
+
+input[type="submit"], input[type="tel"] {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+h1.title {
+    padding: 10px 0;
+    margin: 0;
+    text-align: center;
+    background: rgba(200, 200, 200, 0.3);
+    border-bottom: solid 1px rgba(200, 200, 200, 0.5);
+}
+
+header > p {
+    color: #777;
+    font-size: 90%;
+}
+
+fieldset {
+    border: none;
+}
+
+.table-wrap {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.table-wrap > .table {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+    width: 100%;
+}
+
+.table-wrap > .table > .input-data {
+    display: table-row;
+    vertical-align: inherit;
+    width: 100%;
+}
+
+.table-wrap > .table > .input-data > li {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.input-data > * > * {
+    display: block;
+    text-align: center;
+    width: auto;
+}
+
+.input-data > li > label + span {
+    background: #d2d2d2;
+    line-height: 38px;
+}
+
+.input-data > li > span:last-child {
+    color: #777;
+    font-size: 90%;
+}
+
+.input-data > li > span input[type="radio"] {
+    font-size: 2.4em;
+    margin-top: -1px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.input-data > li > span > * {
+    vertical-align: middle;
+}
+
+.form {
+    padding: 0 5px;
+}
+
+.input-data > * {
+    width: 10%;
+}
+
+textarea {
+    padding: .5em;
+    font-size: 1.2em;
+    box-sizing: border-box;
+    resize: none;
+    width: 100%;
+}
+
+textarea:focus {
+    outline: solid 2px #00c977;
+    box-shadow: none;
+}
+
+input[type="submit"] {
+    display: inline-block;
+    min-width: 46px;
+    padding: 0 20px;
+    font-size: 1.2em;
+    line-height: 46px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #00c977;
+    border: none;
+    border-radius: 2px;
+    width: 100%;
+}
+
+input[type="tel"] {
+    font-size: 1.6em;
+    display: block;
+    line-height: 2em;
+    border-radius: 2px;
+    width: 100%;
+    border: 1px solid #d2d2d2;
+    padding: 0 .5em;
+}
+
+.close-nps {
+    margin-top: 30px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.center {
+    text-align: center;
+}
+
+@media (min-width: 600px) {
+    textarea {
+        width: 300px;
+    }
+
+    input[type="submit"] {
+        width: 120px;
+    }
+
+    input[type="tel"] {
+        font-size: 1.2em;
+        width: 200px;
+    }
+}
+
+@media (min-width: 1010px) {
+    .form {
+        width: 960px;
+    }
+}
+

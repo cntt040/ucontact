@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Chotot Maintain Referral</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/static/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <!-- DataTables Responsive CSS -->
+    <link href="/static/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+    <!-- Timeline CSS -->
+    <link href="/static/dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/dist/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script>
+        function download() {
+            var fr = $("#fromdate").val();
+            var to = $("#todate").val();
+            var url = "/api/v1/download/?fromdate=" + fr + "&todate=" + to;
+            window.location.href = url;
+        }
+    </script>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+
+            <a class="navbar-brand" href="index.html">Chotot Referral Admin v1.0</a>
+        </div>
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="/api/v1/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Maintains<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{ url_for('dashboard.campaign')}}">Campaigns</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('dashboard.referral')}}">Referral</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('dashboard.index')}}">Redeem</a>
+                            </li>
+
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Access Control List</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <a class="btn btn-primary btn-default" style="margin-left: 10px; float: right; margin-bottom: 15px"
+                               href="{{url_for('dashboard.referral_add')}}">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                Add ACL
+                            </a>
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>User ID</th>
+                                    <th>Phone</th>
+                                    <th>Active</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in data.acl %}
+                                <tr style="background-color:{{ loop.cycle('#dff0d8', '#fcf8e3') }}">
+                                    <td align="center">{{ item[0] }}</td>
+                                    <td align="center">{{ item[1] }}</td>
+                                    <td align="center">{{ item[2] }}</td>
+                                    <!--<td align="center">{{ item[3] }}</td>-->
+                                    <!--<td align="left">{{ item[4] }}</td>-->
+                                    <td>{{ item[3] }}</td>
+                                    <!--<td>{{ item[6] }}</td>-->
+                                    <td align="center">
+                                        {% if item[4] %}
+                                        <span style="color: green">Yes</span>
+                                        {% else %}
+                                        <span style="color: red">No</span>
+                                        {%endif%}
+                                    </td>
+
+                                    <td align="center">
+                                        <a href="{{ url_for('dashboard.referral_detail',id=item[1])}}"
+                                           class="btn btn-primary btn-warning"><span
+                                                class="glyphicon glyphicon-edit"></span> Edit</a>
+
+                                        <div onclick=del_referral("{{url_for('dashboard.referral_del',id=item[1])}}")
+                                             class="btn btn-primary btn-danger"><span
+                                                class="glyphicon glyphicon-remove-sign"></span> Delete
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                            <div class="row">
+
+                                <div class="col-sm-12" style="text-align: center">
+                                    <div class="dataTables_paginate paging_simple_numbers"
+                                         id="dataTables-example_paginate">
+                                        <!--{{data.paging.total_page}}-->
+                                        <ul class="pagination">
+                                            <li class="paginate_button previous {%if data.paging.page_cur == 1%} disabled {%endif%}" aria-controls="dataTables-example"
+                                                tabindex="0" id="dataTables-example_previous">
+                                              <a href="{%if data.paging.page_cur >1 %}{{request.path}}?fromdate={{data.fromdate}}&todate={{data.todate}}&campaign={{data.campaign_id_server}}&page={{data.paging.page_cur-1}}{%endif%}">Previous</a>
+                                            </li>
+
+                                             <li class="paginate_button disabled" aria-controls="dataTables-example"
+                                                tabindex="{{i}}"><a href="">{{data.paging.page_cur}}/{{data.paging.total_page}}</a>
+                                            </li>
+                                            <li class="paginate_button next {%if data.paging.page_cur >= data.paging.total_page%} disabled {%endif%}" aria-controls="dataTables-example"
+                                                tabindex="0" id="dataTables-example_next">
+
+                                                <a href="{%if data.paging.page_cur < data.paging.total_page%} {{request.path}}?fromdate={{data.fromdate}}&todate={{data.todate}}&campaign={{data.campaign_id_server}}&page={{data.paging.page_cur+1}}{%endif%}">
+                                                    Next
+                                                </a>
+
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/static/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/static/dist/js/sb-admin-2.js"></script>
+<script>
+    function del_referral(url) {
+        var cf = confirm("Are you sure delete this referral?");
+        if (cf == true) {
+            window.location.href = url;
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+
+</html>

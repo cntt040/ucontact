@@ -1,0 +1,3 @@
+[submodule "provision"]
+	path = provision
+	url = ssh://git@git.chotot.org:2222/devops/silver-blade.git
