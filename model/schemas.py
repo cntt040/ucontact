@@ -3,6 +3,7 @@ import time
 
 from appcore.database import *
 
+
 class Contact(BaseModel):
     full_name = CharField(null=True)
     phone = CharField(null=True)
@@ -16,6 +17,6 @@ class Contact(BaseModel):
     lat = CharField(null=True)
     long = CharField(null=True)
     avatar = TextField(null=True)
+    search = TextField(null=True)
     create_time = IntegerField(default=int(time.time()))
     update_time = IntegerField(default=int(time.time()))
-

@@ -34,9 +34,7 @@ def upload_file():
         if not os.path.exists(path):
             os.makedirs(path)
         file.save(path + filename)
-        topupfile = FileTopUp.create(name=filename, path=(path + filename))
-        data = topupfile._data
-        return success(data)
+        return success({})
         # else:
         #     return error(message="File was not allowed", code=400)
     except:

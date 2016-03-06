@@ -2,6 +2,7 @@
 from flask import Blueprint
 
 from appcore.handler import *
+from appcore.utils import strip_accents
 from model.schemas import *
 
 module = Blueprint('ucontact', __name__)
@@ -14,7 +15,8 @@ def index():
         full_name = unicode(full_name)
         data = []
         if full_name != "":
-            contacts = Contact.select().where(Contact.full_name.contains(full_name))
+            full_name = strip_accents(full_name)
+            contacts = Contact.select().where(Contact.search.contains(full_name))
             if contacts:
                 for c in contacts:
                     data.append(c._data)
@@ -26,7 +28,7 @@ def index():
 @module.route('/', methods=['POST'])
 def addContact():
     try:
-        full_name = params.full_name
+        full_name = unicode(params.full_name)
         relationship = params.relationship
         birthday = params.birthday
         folk = params.folk
@@ -52,6 +54,7 @@ def addContact():
             contact.avatar = avatar
         if phone is not None:
             contact.phone = phone
+        contact.search = strip_accents(full_name)
         contact.lat = lat
         contact.long = long
         contact.save()
@@ -62,7 +65,7 @@ def addContact():
 
 @module.route('/<int:id>', methods=['PUT'])
 def editContact(id):
-    try:
+    # try:
         full_name = params.full_name
         relationship = params.relationship
         birthday = params.birthday
@@ -73,6 +76,7 @@ def editContact(id):
         avatar = params.avatar
         lat = params.lat
         long = params.long
+
 
         contact = Contact.get(Contact.id == id)
         contact.full_name = full_name
@@ -86,7 +90,8 @@ def editContact(id):
         contact.lat = lat
         contact.long = long
         contact.phone = params.phone
+        contact.search = strip_accents(full_name)
         contact.save()
         return success(contact._data)
-    except Exception as e:
-        return error("Không tìm thấy thông tin", code=404, errors=e.message)
+    # except Exception as e:
+    #     return error(u"Không tìm thấy thông tin", code=404, errors=e.message)
