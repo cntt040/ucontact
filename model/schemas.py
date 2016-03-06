@@ -5,6 +5,7 @@ from appcore.database import *
 
 class Contact(BaseModel):
     full_name = CharField(null=True)
+    phone = CharField(null=True)
     relationship = CharField(null=True)
     gender = CharField(null=True, default='Nam')
     birthday = CharField(null=True)

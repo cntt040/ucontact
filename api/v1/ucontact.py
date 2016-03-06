@@ -7,26 +7,17 @@ from model.schemas import *
 module = Blueprint('ucontact', __name__)
 
 
-@module.route('/<string:full_name>', methods=['GET'])
-def index(full_name=""):
+@module.route('/', methods=['GET'])
+def index():
     try:
+        full_name = xargs.q
         full_name = unicode(full_name)
         data = []
         if full_name != "":
             contacts = Contact.select().where(Contact.full_name.contains(full_name))
-            print contacts.sql()
             if contacts:
                 for c in contacts:
-                    temp = {
-                        "full_name": c.full_name,
-                        "relationship": c.relationship,
-                        "birthday": c.birthday,
-                        "folk": c.folk,
-                        "address": c.address,
-                        "number_family": c.number_family,
-                        "number_street": c.number_street
-                    }
-                    data.append(temp)
+                    data.append(c._data)
         return success(data)
     except Exception as e:
         return error("Không tìm thấy thông tin", code=404, errors=e.message)
@@ -45,6 +36,7 @@ def addContact():
         avatar = params.avatar
         lat = params.lat
         long = params.long
+        phone = params.phone
 
         contact = Contact()
         contact.full_name = full_name
@@ -58,6 +50,8 @@ def addContact():
             contact.number_street = number_street
         if avatar is not None:
             contact.avatar = avatar
+        if phone is not None:
+            contact.phone = phone
         contact.lat = lat
         contact.long = long
         contact.save()
@@ -67,7 +61,7 @@ def addContact():
 
 
 @module.route('/<int:id>', methods=['PUT'])
-def editContact():
+def editContact(id):
     try:
         full_name = params.full_name
         relationship = params.relationship
@@ -80,20 +74,18 @@ def editContact():
         lat = params.lat
         long = params.long
 
-        contact = Contact()
+        contact = Contact.get(Contact.id == id)
         contact.full_name = full_name
         contact.relationship = relationship
         contact.birthday = birthday
         contact.folk = folk
         contact.address = address
-        if number_street is not None:
-            contact.number_family = number_family
-        if number_street is not None:
-            contact.number_street = number_street
-        if avatar is not None:
-            contact.avatar = avatar
+        contact.number_family = number_family
+        contact.number_street = number_street
+        contact.avatar = avatar
         contact.lat = lat
         contact.long = long
+        contact.phone = params.phone
         contact.save()
         return success(contact._data)
     except Exception as e:
